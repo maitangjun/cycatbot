@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+
+<html lang="zh">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CY的人·咪·机器人</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&amp;family=JetBrains+Mono:wght@400;700&amp;family=Share+Tech+Mono&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer="" src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        mech: ['Share Tech Mono', 'monospace'],
+                    },
+                    animation: {
+                        'bounce-walk': 'bounce-walk 0.6s infinite alternate',
+                        'waddle': 'waddle 1s ease-in-out infinite',
+                        'float': 'float 3s ease-in-out infinite',
+                        'float-delayed': 'float 3s ease-in-out 1.5s infinite',
+                    }
+                }
+            }
+        }
+    </script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+<style>
+        /* Cyberpunk Light Theme */
+        :root { 
+            --cyber-black: #050505;
+            --cyber-purple: #9d00ff;
+            --cyber-cyan: #00f3ff;
+            --cyber-gray: #f3f4f6;
+        } 
+        
+        body { 
+            background-color: #f8f9fa; 
+            color: #000000; 
+            font-family: 'JetBrains Mono', 'Inter', monospace; 
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+        
+        /* Cyberpunk Grid Background */
+        .cyber-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* Cyber Panel - Retro Tech Style */
+        .cyber-panel {
+            background: #ffffff;
+            /* Bold Tech Border - Deep Purple */
+            border: 2px solid #6b21a8; 
+            position: relative;
+            margin: 12px;
+            /* Layered Shadow - Retro Glow */
+            box-shadow: 
+                0 0 0 2px rgba(107, 33, 168, 0.1),
+                8px 8px 0px #e9d5ff; 
+            transition: all 0.3s ease;
+            overflow: hidden; 
+            animation: border-pulse 4s infinite alternate;
+        }
+
+        .cyber-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px; /* Slightly thinner for delicate look */
+            background: linear-gradient(90deg, transparent, #d946ef, #8b5cf6, transparent); /* Pink to Purple Retro Gradient */
+            animation: scan-line 3s linear infinite;
+            z-index: 20;
+            box-shadow: 0 0 8px rgba(217, 70, 239, 0.6); /* Glow effect */
+        }
+
+        @keyframes scan-line {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes border-pulse {
+            0% {
+                border-color: #6b21a8;
+                box-shadow: 
+                    0 0 0 2px rgba(107, 33, 168, 0.1),
+                    8px 8px 0px #e9d5ff;
+            }
+            100% {
+                border-color: #9333ea;
+                box-shadow: 
+                    0 0 15px rgba(147, 51, 234, 0.4),
+                    12px 12px 0px #d8b4fe;
+            }
+        }
+
+        /* Retro Window Title Bar - 90s Cyberpunk Style */
+        .window-title-bar {
+            background: #4c1d95;
+            background-image: linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%);
+            background-size: 4px 4px;
+            border-bottom: 2px solid #a855f7;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Share Tech Mono', monospace;
+            position: relative;
+        }
+
+        /* Active Line under Title Bar */
+        .window-title-bar::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 30%;
+            height: 2px;
+            background: #d946ef; /* Pink/Purple to match top border */
+            box-shadow: 0 0 5px #d946ef, 0 0 10px #8b5cf6;
+            animation: scanning-bar 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes scanning-bar {
+            0% { left: 0; width: 20%; }
+            50% { width: 40%; }
+            100% { left: 80%; width: 20%; }
+        }
+
+        .window-title {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: #ffffff;
+            text-shadow: 0 0 5px rgba(168, 85, 247, 0.8);
+        }
+        
+        .window-title span {
+            color: #d8b4fe;
+            margin-left: 8px;
+            font-size: 0.9em;
+            opacity: 0.8;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* Retro Controls */
+        .window-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .control-btn {
+            width: 14px;
+            height: 14px;
+            background: #2e1065;
+            border: 1px solid #a855f7;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+        }
+        
+        .control-btn::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            bottom: 2px;
+            background: #a855f7;
+            opacity: 0.5;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.1);
+            border-color: #fff;
+        }
+        
+        .control-btn:hover::after {
+            opacity: 1;
+            box-shadow: 0 0 5px #a855f7;
+        }
+        
+        /* Specific colors for retro feel */
+        .control-btn:nth-child(1)::after { background: #ef4444; }
+        .control-btn:nth-child(1):hover { border-color: #ef4444; }
+        
+        .control-btn:nth-child(2)::after { background: #eab308; }
+        .control-btn:nth-child(2):hover { border-color: #eab308; }
+        
+        .control-btn:nth-child(3)::after { background: #22c55e; }
+        .control-btn:nth-child(3):hover { border-color: #22c55e; }
+
+        .window-content {
+            padding: 2rem;
+            background: #ffffff;
+        }
+
+        /* Glitch Text Effect - Purple & Pink Theme - Multiline Safe */
+        .glitch-text {
+            position: relative;
+            font-weight: 900;
+            text-transform: uppercase;
+            /* Remove clip-based animation that might cause issues with complex layouts, use text-shadow vibration */
+        }
+        
+        .glitch-text:hover {
+            animation: glitch-skew 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+        }
+
+        @keyframes glitch-skew {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-2deg); }
+            40% { transform: skew(2deg); }
+            60% { transform: skew(-1deg); }
+            80% { transform: skew(1deg); }
+            100% { transform: skew(0deg); }
+        }
+
+        /* Text Move Animation */
+        @keyframes text-move {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .animate-text-move {
+            display: inline-block;
+            animation: text-move 3s ease-in-out infinite;
+            color: #9333ea; /* Purple to match theme */
+        }
+
+        /* Cyberpunk Glitch Text Animation - Enhanced (Dark Purple, Gold, Silver - No Neon) */
+        .cyber-glitch-text {
+            color: #2e003e; /* Dark Purple (Deep Violet) */
+            text-shadow: 2px 2px 0px #d4af37, -1px -1px 0px #a3a3a3; /* Metallic Gold + Silver Shadow */
+            position: relative;
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace; /* Mechanical/Tech Font */
+            letter-spacing: 2px;
+            font-weight: 900;
+            animation: silver-glitch 4s infinite alternate;
+        }
+
+        .cyber-glitch-text::before,
+        .cyber-glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f3f4f6; /* Match background color (gray-100/white) to hide main text */
+            opacity: 0.8;
+        }
+
+        .cyber-glitch-text::before {
+            left: 2px;
+            text-shadow: -2px 0 #a3a3a3; /* Metallic Silver glitch */
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 3s infinite linear alternate-reverse;
+        }
+
+        .cyber-glitch-text::after {
+            left: -2px;
+            text-shadow: -1px 0 #d4af37; /* Metallic Gold glitch */
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim-2 2s infinite linear alternate-reverse;
+        }
+
+        @keyframes silver-glitch {
+            0%, 95% { color: #2e003e; text-shadow: 2px 2px 0px #d4af37, -1px -1px 0px #a3a3a3; } /* Dark Purple with Gold/Silver shadows */
+            96%, 99% { color: #a3a3a3; text-shadow: 2px 2px 0px #2e003e, -1px -1px 0px #d4af37; } /* Flash Silver with Dark Purple/Gold shadows */
+            100% { color: #2e003e; text-shadow: 2px 2px 0px #d4af37, -1px -1px 0px #a3a3a3; }
+        }
+
+        @keyframes glitch-anim {
+            0% { clip: rect(38px, 9999px, 43px, 0); }
+            5% { clip: rect(87px, 9999px, 6px, 0); }
+            10% { clip: rect(61px, 9999px, 3px, 0); }
+            15% { clip: rect(32px, 9999px, 95px, 0); }
+            20% { clip: rect(44px, 9999px, 14px, 0); }
+            25% { clip: rect(8px, 9999px, 63px, 0); }
+            30% { clip: rect(69px, 9999px, 86px, 0); }
+            35% { clip: rect(10px, 9999px, 2px, 0); }
+            40% { clip: rect(93px, 9999px, 35px, 0); }
+            45% { clip: rect(25px, 9999px, 78px, 0); }
+            50% { clip: rect(54px, 9999px, 46px, 0); }
+            55% { clip: rect(3px, 9999px, 91px, 0); }
+            60% { clip: rect(72px, 9999px, 18px, 0); }
+            65% { clip: rect(48px, 9999px, 57px, 0); }
+            70% { clip: rect(16px, 9999px, 99px, 0); }
+            75% { clip: rect(85px, 9999px, 29px, 0); }
+            80% { clip: rect(36px, 9999px, 64px, 0); }
+            85% { clip: rect(59px, 9999px, 12px, 0); }
+            90% { clip: rect(9px, 9999px, 82px, 0); }
+            95% { clip: rect(67px, 9999px, 41px, 0); }
+            100% { clip: rect(22px, 9999px, 75px, 0); }
+        }
+
+        @keyframes glitch-anim-2 {
+            0% { clip: rect(65px, 9999px, 100px, 0); }
+            5% { clip: rect(5px, 9999px, 34px, 0); }
+            10% { clip: rect(82px, 9999px, 16px, 0); }
+            15% { clip: rect(27px, 9999px, 91px, 0); }
+            20% { clip: rect(53px, 9999px, 68px, 0); }
+            25% { clip: rect(11px, 9999px, 47px, 0); }
+            30% { clip: rect(79px, 9999px, 25px, 0); }
+            35% { clip: rect(38px, 9999px, 86px, 0); }
+            40% { clip: rect(92px, 9999px, 9px, 0); }
+            45% { clip: rect(19px, 9999px, 55px, 0); }
+            50% { clip: rect(64px, 9999px, 73px, 0); }
+            55% { clip: rect(4px, 9999px, 32px, 0); }
+            60% { clip: rect(46px, 9999px, 88px, 0); }
+            65% { clip: rect(89px, 9999px, 14px, 0); }
+            70% { clip: rect(23px, 9999px, 62px, 0); }
+            75% { clip: rect(71px, 9999px, 95px, 0); }
+            80% { clip: rect(15px, 9999px, 37px, 0); }
+            85% { clip: rect(56px, 9999px, 81px, 0); }
+            90% { clip: rect(33px, 9999px, 10px, 0); }
+            95% { clip: rect(98px, 9999px, 51px, 0); }
+            100% { clip: rect(42px, 9999px, 26px, 0); }
+        }
+
+
+        /* Typography */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #4a0072;
+            padding-bottom: 0.5rem;
+        }
+        
+        .section-title {
+            font-weight: 800;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: #7e22ce; /* Purple 700 - Darkened */
+            color: #fff;
+            padding: 2px 8px;
+            display: inline-block;
+            transform: skewX(-12deg); /* Slanted style matching AI Identity */
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .info-grid { grid-template-columns: 1fr; gap: 1rem; }
+            body { height: auto; overflow-y: auto; } /* Allow scroll on mobile */
+            .cyber-panel { margin-bottom: 100px; } /* Space for characters */
+        }
+
+        .data-label { font-weight: 700; color: #000000; font-size: 0.8rem; }
+        .data-value { font-weight: 700; color: #000000; font-size: 0.95rem; }
+
+        /* Navigation & Footer */
+        .nav-link { color: #000000; transition: all 0.2s; font-weight: 700; }
+        .nav-link:hover { color: var(--cyber-purple); text-shadow: 2px 2px 0px rgba(0,0,0,0.1); }
+
+        [x-cloak] { display: none !important; }
+
+        /* Walking Animation Classes */
+        .character-container {
+            position: fixed;
+            bottom: 0;
+            z-index: 40;
+            transition: transform 0.2s linear;
+            pointer-events: auto;
+            cursor: pointer;
+        }
+
+        /* Horizontal Bounce Animation */
+        @keyframes bounce-x {
+            0%, 100% { transform: translateX(0); animation-timing-function: cubic-bezier(0.8, 0, 1, 1); }
+            50% { transform: translateX(25%); animation-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+        }
+        .animate-bounce-x {
+            animation: bounce-x 1s infinite;
+        }
+
+        /* Sprite Walk Cycle Animation */
+        @keyframes walk-cycle {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        .animate-walk-cycle {
+            animation: walk-cycle 1.2s steps(4) infinite; /* Slightly faster for flow */
+        }
+
+        /* Bobbing Animation (Up/Down) */
+        @keyframes bounce-walk {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+        .animate-bounce-walk {
+            animation: bounce-walk 0.6s ease-in-out infinite; /* 2 bounces per walk cycle (1.2s) */
+        }
+        
+        /* Falling Cats Animation */
+        @keyframes fall {
+            to { transform: translateY(120vh) rotate(360deg); }
+        }
+        .falling-cat {
+            animation: fall linear forwards;
+        }
+
+        /* Waddle Animation for Bot */
+        @keyframes waddle {
+            0%, 100% { transform: rotate(-2deg) translateY(0); }
+            50% { transform: rotate(2deg) translateY(-1px); }
+        }
+        .animate-waddle {
+            animation: waddle 0.4s ease-in-out infinite;
+        }
+
+        /* Cyberpunk Hover Glitch Effect */
+        @keyframes glitch-skew-hover {
+            0% { transform: skew(0deg) translateY(0); }
+            15% { transform: skew(-2deg) translateY(-2px); }
+            30% { transform: skew(2deg) translateY(-3px); text-shadow: 1px 0 #00f3ff, -1px 0 #9d00ff; }
+            45% { transform: skew(-1deg) translateY(-2.5px); }
+            60% { transform: skew(1deg) translateY(-3px); text-shadow: -1px 0 #00f3ff, 1px 0 #9d00ff; }
+            75% { transform: skew(-0.5deg) translateY(-2px); }
+            90% { transform: skew(0.5deg) translateY(-1px); }
+            100% { transform: skew(0deg) translateY(0); }
+        }
+
+        .cyber-hover-glitch {
+            transition: all 0.2s ease;
+            display: inline-block;
+            position: relative;
+        }
+
+        .cyber-hover-glitch:hover {
+            animation: glitch-skew-hover 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+            color: #9333ea !important; /* Force Purple */
+        }
+    </style>
+</link></head>
+<body class="bg-white text-black min-h-screen overflow-x-hidden relative grid-bg">
+<!-- Walking Characters Layer -->
+<!-- Gallery Floor Line -->
+<div class="fixed bottom-0 left-0 w-full border-t-[3px] border-purple-900 z-30 pointer-events-none"></div>
+<div class="fixed inset-x-0 bottom-0 h-64 z-40 overflow-hidden" x-data="characters()">
+<!-- CY Character -->
+<div :style="`left: ${cy.x}%; transform: scaleX(${cy.dir})`" @click="$dispatch('open-wish'); playCyVoice()" class="character-container">
+<!-- Bot-like Presentation (Waddle) -->
+<div class="relative w-24 md:w-48 h-32 md:h-64 mt-12 animate-waddle">
+<img alt="CY Character" class="w-full h-full object-contain" src="static/images/cy-walk-transparent.png?v=8"/>
+<!-- Name Tag -->
+<div :style="`transform: scaleX(${cy.dir})`" class="absolute -top-6 left-1/2 -translate-x-1/2 bg-[#7B61FF] text-white text-[10px] px-2 py-0.5 rounded-full whitespace-nowrap shadow-sm font-bold tracking-wide z-20">
+                     CY
+                 </div>
+</div>
+</div>
+<!-- Cat Character -->
+<div :style="`left: ${cat.x}%; transform: scaleX(${cat.dir})`" @click="playMeow()" class="character-container">
+<div class="relative w-32 md:w-56 h-32 md:h-56 mt-16 animate-bounce-walk" style="animation-duration: 0.4s;">
+<!-- Try processed image first, fallback to original, then hidden CSS art -->
+<img alt="Mimi" class="w-full h-full object-contain" src="static/images/mimi-transparent.png?v=7"/>
+<div class="hidden w-full h-full relative">
+<!-- Body -->
+<div class="absolute bottom-0 left-2 w-12 h-8 bg-white border-2 border-gray-400 rounded-full"></div>
+<!-- Head -->
+<div class="absolute bottom-4 left-0 w-8 h-8 bg-white border-2 border-gray-400 rounded-full z-10"></div>
+<!-- Ears -->
+<div class="absolute bottom-10 left-0 w-3 h-3 bg-gray-600 rotate-45"></div>
+<div class="absolute bottom-10 left-5 w-3 h-3 bg-gray-600 rotate-45"></div>
+<!-- Stripes -->
+<div class="absolute bottom-6 left-2 w-4 h-1 bg-gray-800 rounded-full z-20"></div>
+</div>
+<!-- Name Tag -->
+<div :style="`transform: scaleX(${cat.dir})`" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-white text-[10px] px-2 py-1 rounded-full whitespace-nowrap">
+                    咪咪
+                </div>
+</div>
+</div>
+<!-- Robot Character -->
+<div :style="`left: ${bot.x}%; transform: scaleX(${bot.dir})`" @click="$dispatch('open-fortune')" class="character-container">
+<!-- Bot uses waddle instead of bounce -->
+<div class="relative w-32 md:w-56 h-40 md:h-64 mt-12 animate-waddle">
+<!-- White backing removed as per request -->
+<img alt="Bot" class="w-full h-full object-contain relative z-10" src="static/images/bot-transparent.png?v=9"/>
+<!-- Fallback: Generated Robot Look -->
+<div class="hidden w-full h-full flex-col items-center justify-end">
+<!-- Antenna -->
+<div class="w-1 h-4 bg-gray-400 animate-pulse"></div>
+<!-- Head -->
+<div class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center relative overflow-hidden">
+<div class="absolute inset-0 bg-cyan-500/20 animate-pulse"></div>
+<div class="flex gap-1">
+<div class="w-2 h-2 bg-cyan-400 rounded-full animate-blink"></div>
+<div class="w-2 h-2 bg-cyan-400 rounded-full animate-blink" style="animation-delay: 0.2s"></div>
+</div>
+</div>
+<!-- Body -->
+<div class="w-12 h-10 bg-gray-200 rounded-xl mt-1 border-2 border-gray-300 flex items-center justify-center">
+<div class="w-8 h-6 bg-gray-800 rounded flex items-center justify-center">
+<span class="text-[8px] text-cyan-500 font-mono">AI</span>
+</div>
+</div>
+<!-- Legs (Animated via CSS art) -->
+<div class="flex gap-2 mt-1">
+<div class="w-3 h-4 bg-gray-400 rounded-b animate-walk-leg-l"></div>
+<div class="w-3 h-4 bg-gray-400 rounded-b animate-walk-leg-r"></div>
+</div>
+</div>
+<!-- Name Tag -->
+<div :style="`transform: scaleX(${bot.dir})`" class="absolute -top-10 left-1/2 -translate-x-1/2 bg-cyan-500/80 text-white text-[10px] px-2 py-1 rounded-full whitespace-nowrap">
+                    Bot
+                </div>
+</div>
+</div>
+</div>
+<script>
+        function playMeow() {
+            // Play real meow sound
+            const audio = new Audio('/static/audio/meow.mp3');
+            audio.play().catch(e => console.log("Audio play failed", e));
+        }
+        
+        async function playCyVoice() {
+            const text = "你好，我是CY。人咪机器人，是我在人工智能时代的身份标识，也是我的赛博灵魂。点击页面上的猫咪和机器人，会有惊喜出现。";
+            try {
+                const res = await fetch(`/api/tts?text=${encodeURIComponent(text)}`);
+                if (res.ok && res.headers.get('Content-Type') && res.headers.get('Content-Type').startsWith('audio')) {
+                    const blob = await res.blob();
+                    const url = URL.createObjectURL(blob);
+                    const audio = new Audio(url);
+                    audio.play().catch(()=>{});
+                    return;
+                }
+            } catch (e) {}
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = "zh-CN";
+                const voices = window.speechSynthesis.getVoices();
+                const targetVoice = voices.find(v =>
+                    (v.name.includes('Ting-Ting') || v.name.includes('Xiaoxiao') || v.name.includes('Google') || v.name.includes('Female')) &&
+                    v.lang && v.lang.includes(utterance.lang.split('-')[0])
+                ) || voices.find(v => v.lang && v.lang.includes(utterance.lang.split('-')[0]));
+                if (targetVoice) utterance.voice = targetVoice;
+                utterance.pitch = 1.3;
+                utterance.rate = 1.08;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function decodingText(text) {
+            return {
+                text: text,
+                originalText: text,
+                isDecoding: false,
+                chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?",
+                interval: null,
+                
+                init() {
+                    this.startDecoding();
+                    // Periodic glitch effect
+                    setInterval(() => {
+                        if(Math.random() > 0.8 && !this.isDecoding) {
+                            this.startDecoding();
+                        }
+                    }, 5000); 
+                },
+                
+                startDecoding() {
+                    this.isDecoding = true;
+                    let iterations = 0;
+                    const maxIterations = 3; 
+                    
+                    if(this.interval) clearInterval(this.interval);
+                    
+                    this.interval = setInterval(() => {
+                        this.text = this.originalText.split("")
+                            .map((char, index) => {
+                                if(index < iterations) {
+                                    return this.originalText[index];
+                                }
+                                return this.chars[Math.floor(Math.random() * this.chars.length)];
+                            })
+                            .join("");
+                        
+                        if(iterations >= this.originalText.length) {
+                            clearInterval(this.interval);
+                            this.isDecoding = false;
+                            this.text = this.originalText; 
+                        }
+                        
+                        iterations += 1/2; 
+                    }, 50);
+                }
+            }
+        }
+
+
+        function characters() {
+            return {
+                cy: { x: 10, dir: 1, target: 80, speed: 0.05, state: 'walk' }, /* Slowed down from 0.1 */
+                cat: { x: 15, dir: 1, target: 85, speed: 0.15, state: 'walk' },
+                bot: { x: 80, dir: -1, target: 20, speed: 0.08, state: 'walk' },
+                init() {
+                    setInterval(() => {
+                        this.move(this.cy);
+                        this.move(this.cat);
+                        this.move(this.bot);
+                    }, 50);
+                    
+                    // Randomize targets periodically
+                    setInterval(() => {
+                        if(Math.random() > 0.7) this.setNewTarget(this.cy);
+                        if(Math.random() > 0.6) this.setNewTarget(this.cat);
+                        if(Math.random() > 0.8) this.setNewTarget(this.bot);
+                    }, 3000);
+                },
+                move(char) {
+                    if (Math.abs(char.x - char.target) < 1) {
+                        char.state = 'idle'; // Arrived
+                        return;
+                    }
+                    
+                    char.state = 'walk';
+                    let direction = char.target > char.x ? 1 : -1;
+                    char.dir = direction; // Face direction
+                    char.x += direction * char.speed;
+                    
+                    // Boundary check
+                    if(char.x < 2) char.x = 2;
+                    if(char.x > 95) char.x = 95;
+                },
+                setNewTarget(char) {
+                    char.target = Math.random() * 90 + 5; // Random position between 5% and 95%
+                }
+            }
+        }
+    </script>
+<!-- Navigation -->
+<nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-200 transition-all duration-300" id="global-nav" style="z-index: 1000 !important;" x-data="{ mobileMenuOpen: false, aigcOpen: false }">
+<div class="max-w-[1200px] mx-auto px-10">
+<div class="flex items-center justify-between h-16 md:h-20">
+<!-- Logo -->
+<div class="flex-shrink-0 pr-4 md:pr-8">
+<a class="mr-4 md:mr-8 text-lg sm:text-xl md:text-2xl font-mech font-bold tracking-widest text-black hover:text-purple-600 transition-colors whitespace-nowrap" href="index.html">
+                    CY的人·咪·机器人
+                </a>
+</div>
+<!-- Right side: Navigation links + Language switcher -->
+<div class="hidden md:flex items-center space-x-8">
+<div class="flex items-center space-x-8 text-sm md:text-base font-mech font-bold tracking-wider text-black">
+<div @mouseenter="aigcOpen = true" @mouseleave="aigcOpen = false" class="relative">
+<button @click="aigcOpen = !aigcOpen" class="text-black font-bold hover:opacity-70 transition-opacity flex items-center py-2 select-none">
+                            AIGC创作
+                            <svg aria-hidden="true" class="ml-1 h-3 w-3" fill="none" viewbox="0 0 10 6">
+<path d="M1 1l4 4 4-4" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></path>
+</svg>
+</button>
+<div @click.away="aigcOpen = false" class="absolute left-0 top-full mt-0 w-28 bg-white border border-gray-200 rounded-lg shadow-lg transition-all duration-150 origin-top-left flex flex-col font-sans" style="z-index: 1001;" x-cloak="" x-show="aigcOpen">
+<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="robots/index.html">机器人</a>
+<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="shortfilm/index.html">短片</a>
+<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="art/index.html">艺术</a>
+<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="design/index.html">设计</a>
+<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="music/index.html">数字音乐人</a>
+<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity last:border-0 tracking-wide" href="aigc/curation/index.html">策展</a>
+</div>
+</div>
+<a class="text-black font-bold hover:opacity-70 transition-opacity" href="ai-projects/index.html">AI项目</a>
+<a class="text-black font-bold hover:opacity-70 transition-opacity" href="follows/index.html">关注与合作</a>
+</div>
+<div class="cursor-pointer text-sm font-bold text-black hover:opacity-70 transition-opacity select-none" onclick="toggleLang()">
+                    中文 <span class="mx-1">/</span> En
+                </div>
+</div>
+<!-- Mobile menu button -->
+<div class="flex md:hidden">
+<button @click="mobileMenuOpen = !mobileMenuOpen" class="text-black hover:text-black focus:outline-none">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+</div>
+</div>
+<!-- Mobile menu -->
+<div class="md:hidden bg-white border-b border-gray-200" x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-200" x-transition:enter-end="opacity-100 translate-y-0" x-transition:enter-start="opacity-0 -translate-y-2" x-transition:leave="transition ease-in duration-150" x-transition:leave-end="opacity-0 -translate-y-2" x-transition:leave-start="opacity-100 translate-y-0">
+<div class="px-4 pt-2 pb-4 space-y-1">
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="robots/index.html">AIGC创作 - 机器人</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="shortfilm/index.html">AIGC创作 - 短片</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="art/index.html">AIGC创作 - 艺术</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="design/index.html">AIGC创作 - 设计</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="music/index.html">AIGC创作 - 数字音乐人</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="aigc/curation/index.html">AIGC创作 - 策展</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="ai-projects/index.html">AI项目</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="follows/index.html">关注与合作</a>
+<div class="mt-4 px-3 flex items-center space-x-4">
+<span class="text-sm font-bold text-black">Language:</span>
+<div class="cursor-pointer text-xs font-bold text-black hover:opacity-70 transition-opacity select-none" onclick="toggleLang()">
+                    中文 <span class="mx-1">/</span> EN
+                </div>
+</div>
+</div>
+</div>
+</nav>
+<!-- Main Content (Centered & Single Page) -->
+<main class="relative z-10 w-full h-full flex flex-col justify-start items-center px-4 md:px-0 pt-20 pb-8 pointer-events-none">
+<div class="relative z-10 w-full max-w-2xl cyber-panel pointer-events-auto">
+<!-- Retro Window Title Bar -->
+<div class="window-title-bar">
+<div class="window-title">
+<span class="text-purple-300">CY_PROFILE_V2.0</span>
+</div>
+<div class="window-controls">
+<div class="control-btn" title="Minimize"></div>
+<div class="control-btn" title="Maximize"></div>
+<div class="control-btn" title="Close"></div>
+</div>
+</div>
+<!-- Content Area -->
+<div class="window-content relative !p-4 md:!p-6">
+<div id="robots"></div>
+<div id="shortfilm"></div>
+<div id="art"></div>
+<div id="design"></div>
+<div id="music"></div>
+<div id="curation"></div>
+<!-- Header Section -->
+<div class="mb-4 relative z-10 text-center px-2 md:px-4">
+<h2 :data-text="text" class="text-sm md:text-xl font-black mb-2 tracking-wide leading-relaxed cyber-glitch-text whitespace-nowrap drop-shadow-sm w-full mx-auto" x-data="decodingText($el.innerText.trim())" x-text="text">
+                        CY的人·咪·机器人是CY在AI时代的ID
+                    </h2>
+<div class="inline-block bg-gradient-to-r from-purple-600 to-purple-800 text-white px-2 py-1 font-bold text-sm md:text-base transform -skew-x-12 shadow-lg hover:scale-105 transition-transform duration-300">
+<span class="block tracking-widest">CY的AI身份：AI创业社区发起人/科技艺术实践者</span>
+</div>
+</div>
+<!-- 赛博简历统一框架 -->
+<div class="bg-white p-3 md:p-4 rounded-lg border border-gray-200 shadow-sm">
+<div class="flex flex-col md:flex-row gap-3 items-start">
+<div class="flex-shrink-0 w-24 h-24 md:w-32 md:h-32 overflow-hidden rounded-md border border-gray-200 shadow-sm">
+<img alt="CY 证件照" class="w-full h-full object-cover object-top" src="static/images/touxiang.png"/>
+</div>
+<div class="flex-1 md:pl-4 md:border-l md:border-gray-200 space-y-4">
+<div class="space-y-2">
+<h3 class="mb-2">
+<span class="inline-block bg-gradient-to-r from-purple-600 to-purple-800 text-white px-2 py-0.5 font-bold text-sm transform -skew-x-12 shadow-lg tracking-widest font-mech border border-purple-400">人·咪·机器人</span>
+</h3>
+<div class="space-y-1 text-sm text-black pl-2 font-mech">
+<div><span class="font-semibold">人：</span>90后超级个体，ENTJ/F，喜木火。</div>
+<div><span class="font-semibold">咪：</span>CY的家属，8岁咪。</div>
+<div><span class="font-semibold">机器人：</span>世界上的机器人和CY设计的机器人。</div>
+</div>
+</div>
+<div class="space-y-2">
+<h3 class="mb-2">
+<span class="inline-block bg-gradient-to-r from-purple-600 to-purple-800 text-white px-2 py-0.5 font-bold text-sm transform -skew-x-12 shadow-lg tracking-widest font-mech border border-purple-400">实时定位</span>
+</h3>
+<div class="space-y-1 text-sm text-black pl-2 font-mech">
+<div class="flex items-start">
+<span class="font-semibold mr-2 min-w-12">社区：</span>
+<span>计划发起并链接5000+AI创业者与从业者，构建创新生态。</span>
+</div>
+<div class="flex items-start">
+<span class="font-semibold mr-2 min-w-12">艺术：</span>
+<span>以AI为底层架构，深度解构艺术、导演、设计、音乐、策展与写作的边界，开启单兵作战的无限演进探索。</span>
+</div>
+<div class="flex items-start">
+<span class="font-semibold mr-2 min-w-12">硬件：</span>
+<span>正在探索与关注的方向之一。</span>
+</div>
+<div class="flex items-start">
+<span class="font-semibold mr-2 min-w-12">生产：</span>
+<span>用AI代码实现个人‘AI效率革命’，通过技能叠加实现能力无限演进，探索‘单兵即战队’的超级个体边界。</span>
+</div>
+</div>
+</div>
+<!-- 实践准则 部分 -->
+<div class="space-y-2">
+<h3 class="mb-2">
+<span class="inline-block bg-gradient-to-r from-purple-600 to-purple-800 text-white px-2 py-0.5 font-bold text-sm transform -skew-x-12 shadow-lg tracking-widest font-mech border border-purple-400">实践准则</span>
+</h3>
+<blockquote class="text-sm text-black italic font-mech">
+                                    “运用科技硬核实力，赋能文化软实力。”
+                                </blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 底部简化 -->
+<div class="pt-4 text-center border-t border-gray-200">
+</div> <!-- Close window-content -->
+</div>
+</main>
+<!-- Modals for Character Interaction -->
+<div @open-fortune.window="fortuneModal = true; checkFortuneLimit(); $nextTick(() =&gt; { if(!loading &amp;&amp; !fortune) drawFortune() })" @open-wish.window="wishModal = true" x-data="{ 
+            wishModal: false, 
+            fortuneModal: false,
+            contactModal: false,
+            wish: '',
+            wishResponse: '',
+            fortune: '',
+            reusedToday: false,
+            loading: false,
+            checkFortuneLimit() {
+                const today = new Date().toDateString();
+                const lastDate = localStorage.getItem('lastFortuneDate');
+                const lastText = localStorage.getItem('lastFortuneText');
+                this.reusedToday = !!(lastDate === today &amp;&amp; lastText);
+                this.fortune = this.reusedToday ? lastText : '';
+            },
+            saveFortune(text) {
+                const today = new Date().toDateString();
+                localStorage.setItem('lastFortuneDate', today);
+                localStorage.setItem('lastFortuneText', text);
+            },
+            resetTodayFortune() {
+                localStorage.removeItem('lastFortuneDate');
+                localStorage.removeItem('lastFortuneText');
+                this.fortune = '';
+                this.reusedToday = false;
+                this.drawFortune();
+            },
+            async drawFortune() {
+                this.loading = true;
+                try {
+                    const url = `/api/fortune?ts=${Date.now()}`;
+                    let res = await fetch(url, { cache: 'no-store' });
+                    if (!res.ok) {
+                        res = await fetch(url, { cache: 'no-store' });
+                    }
+                    if (!res.ok) throw new Error('Bad response');
+                    const d = await res.json();
+                    const txt = d &amp;&amp; d.fortune ? d.fortune : '';
+                    if (!txt) throw new Error('Empty fortune');
+                    this.fortune = txt;
+                    this.saveFortune(this.fortune);
+                    this.reusedToday = true;
+                } catch (e) {
+                    // 本地兜底：直接给出“上上签”
+                    this.fortune = '【乾为天】上上签：天行健，君子以自强不息。今日气势如虹，宜主动进取，所求皆有回响。';
+                    this.saveFortune(this.fortune);
+                    this.reusedToday = true;
+                } finally {
+                    this.loading = false;
+                }
+            },
+            async sendWish() {
+                if (!this.wish) return;
+                this.loading = true;
+                const controller = new AbortController();
+                const timer = setTimeout(() =&gt; controller.abort(), 30000);
+                try {
+                    const res = await fetch('/api/wishes', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({content: this.wish}),
+                        signal: controller.signal
+                    });
+                    if (!res.ok) throw new Error('Bad response');
+                    const d = await res.json();
+                    this.wishResponse = d.response || '愿望已送达，祝你心想事成。';
+                    this.wish = '';
+                } catch (e) {
+                    this.wishResponse = '网络打盹了，请稍后再试。';
+                } finally {
+                    clearTimeout(timer);
+                    this.loading = false;
+                }
+            }
+        }">
+<!-- Wish Modal (CY) - Robot Style (White/Purple) -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" style="display: none;" x-show="wishModal" x-transition.opacity="">
+<div @click.away="wishModal = false" class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative animate__animated animate__fadeInUp border border-purple-100">
+<div class="p-8 font-sans relative overflow-hidden">
+<!-- Decorative subtle gradient -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-purple-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+<div class="flex justify-between items-center mb-6 relative z-10">
+<h3 class="text-xl font-bold text-black tracking-wide flex items-center gap-2">
+                                赛博许愿
+                            </h3>
+<button @click="wishModal = false" class="text-black hover:text-purple-600 transition-colors">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<p class="text-gray-600 text-sm mb-6 leading-relaxed border-l-4 border-purple-500 pl-3">在数字虚空中留下你给CY的留言，如果是许愿会成真。</p>
+<div class="relative z-10" x-show="!wishResponse">
+<div class="mb-6 relative">
+<textarea class="w-full bg-gray-50 border border-gray-200 text-black font-sans text-sm p-4 h-32 rounded-xl focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all resize-none placeholder-gray-400" placeholder="输入你的愿望..." x-model="wish"></textarea>
+<div class="absolute bottom-2 right-2 text-xs text-gray-400">
+<span class="text-purple-600 font-bold" x-text="wish.length"></span>/200
+                                </div>
+</div>
+<button :disabled="loading" @click="sendWish()" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-xl transition-all font-bold text-sm shadow-lg shadow-purple-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+<span x-show="!loading">发送愿望</span>
+<span class="animate-pulse flex items-center gap-2" x-show="loading">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+                                    发送中...
+                                </span>
+</button>
+</div>
+<div class="py-6 flex flex-col items-center animate__animated animate__fadeIn relative z-10" x-show="wishResponse">
+<div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4 text-green-500">
+<svg class="h-8 w-8" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<p class="text-black font-medium text-sm mb-8 text-center leading-relaxed bg-gray-50 p-4 rounded-xl w-full border border-gray-100" x-text="wishResponse"></p>
+<button @click="wishResponse = ''; wishModal = false" class="text-gray-500 hover:text-black text-xs hover:underline uppercase tracking-widest">
+                                [ 关闭 ]
+                            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Fortune Modal (Bot) - White & Purple Theme -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" style="display: none;" x-show="fortuneModal" x-transition.opacity="">
+<div @click.away="fortuneModal = false" class="bg-white w-full max-w-md rounded-2xl shadow-2xl overflow-hidden relative animate__animated animate__fadeInUp border border-purple-100">
+<div class="p-8 font-sans relative overflow-hidden">
+<!-- Decorative subtle gradient -->
+<div class="absolute top-0 right-0 w-64 h-64 bg-purple-100/50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+<div class="flex justify-between items-center mb-8 relative z-10">
+<h3 class="text-xl font-bold text-black tracking-wide flex items-center gap-2">
+                                机器仙人赛博求签
+                            </h3>
+<button @click="fortuneModal = false" class="text-black hover:text-purple-600 transition-colors">
+<svg class="h-6 w-6" fill="none" stroke="currentColor" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</button>
+</div>
+<p class="text-black text-sm mb-8 leading-relaxed">领取你的今日赠言</p>
+<div class="flex flex-col items-center relative z-10" x-show="!fortune">
+<div @click="if(!loading) drawFortune()" class="mb-8 text-7xl cursor-pointer hover:scale-110 transition-transform duration-300 filter drop-shadow-md">
+                                🔮
+                            </div>
+<button :disabled="loading" @click="drawFortune()" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-4 rounded-xl hover:shadow-lg hover:shadow-purple-500/30 transition-all font-bold tracking-widest text-sm disabled:opacity-50 group transform active:scale-[0.98]" x-ref="drawBtn">
+<span x-show="!loading">求签</span>
+<span class="flex items-center justify-center gap-2" x-show="loading">
+<svg class="animate-spin h-4 w-4 text-white" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" fill="currentColor"></path>
+</svg>
+                                    计算中...
+                                </span>
+</button>
+</div>
+<div class="animate__animated animate__fadeIn relative z-10" x-show="fortune">
+<div class="bg-purple-50 p-6 rounded-xl border border-purple-100 mb-8 text-center shadow-sm relative overflow-hidden">
+<div class="text-4xl mb-4">✨</div>
+<p class="text-black font-medium text-lg leading-relaxed relative z-10" x-text="fortune"></p>
+</div>
+<div class="flex flex-col items-center gap-4">
+<p class="text-xs text-black" x-show="reusedToday">今日已求过签了，明日再来吧。</p>
+<button @click="resetTodayFortune()" class="text-black hover:text-purple-600 text-sm font-bold tracking-widest hover:underline uppercase">再求一次</button>
+<button @click="fortuneModal = false" class="text-black hover:text-purple-600 text-sm font-bold tracking-widest hover:underline uppercase">关闭</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Contact Modal (Socials) - Terminal Style -->
+<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md" style="display: none;" x-show="contactModal" x-transition.opacity="">
+<div @click.away="contactModal = false" class="cy-terminal w-full max-w-2xl mx-4 relative shadow-2xl animate__animated animate__zoomIn border border-purple-500/30">
+<header class="terminal-header justify-between bg-gray-900 text-white border-b border-gray-800">
+<div class="flex items-center">
+<div class="status-dots"><span></span><span></span><span></span></div>
+<div class="terminal-title font-art text-purple-400">CY_CONNECT_PROTOCOL_V2.0</div>
+</div>
+<button @click="contactModal = false" class="text-gray-400 hover:text-white transition-colors">×</button>
+</header>
+<div class="terminal-body bg-black/90 p-8 text-white max-h-[80vh] overflow-y-auto">
+<!-- Floating Quote -->
+<div class="mb-10 text-center animate__animated animate__pulse animate__infinite" style="animation-duration: 3s;">
+<p class="text-xl md:text-2xl font-mono text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 font-bold tracking-wider">
+                                “期待在数字森林的某个节点，与你产生共振。”
+                            </p>
+</div>
+<!-- Group Photo Placeholder -->
+<div class="mb-10 rounded-xl overflow-hidden border border-gray-800 shadow-[0_0_20px_rgba(168,85,247,0.2)] group">
+<div class="aspect-video bg-gray-900 flex items-center justify-center relative">
+<div class="absolute inset-0 bg-gradient-to-tr from-purple-900/20 to-cyan-900/20"></div>
+<img alt="CY Community" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" src="static/images/group-photo.png"/>
+<div class="absolute bottom-2 right-4 text-[10px] font-mono text-cyan-500 bg-black/60 px-2 py-1 rounded border border-cyan-500/30">IMG_LOG: TEAM_SNAPSHOT</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Subscribe & Follow -->
+<div class="space-y-4" id="ai-projects">
+<h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-gray-800 pb-2 mb-4">关注与订阅 / SUBSCRIBE</h3>
+<!-- RED -->
+<a class="flex items-center p-4 bg-gray-900/50 border border-gray-800 rounded-lg hover:bg-gray-800 hover:border-red-500/50 transition-all group" href="https://xhslink.com/m/AIvwGqwiY6A" target="_blank">
+<div class="w-10 h-10 bg-red-600 text-white rounded-lg flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">📕</div>
+<div>
+<div class="font-bold text-gray-200 group-hover:text-white">小红书 (RED)</div>
+<div class="text-xs text-gray-500 font-mono">点击直接进入链接</div>
+</div>
+</a>
+<!-- X -->
+<a class="flex items-center p-4 bg-gray-900/50 border border-gray-800 rounded-lg hover:bg-gray-800 hover:border-white/50 transition-all group" href="https://x.com/CY_CHENYAO2088" target="_blank">
+<div class="w-10 h-10 bg-black text-white border border-gray-700 rounded-lg flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">X</div>
+<div>
+<div class="font-bold text-gray-200 group-hover:text-white">X (Twitter)</div>
+<div class="text-xs text-gray-500 font-mono">点击直接进入链接</div>
+</div>
+</a>
+<!-- INS -->
+<a class="flex items-center p-4 bg-gray-900/50 border border-gray-800 rounded-lg hover:bg-gray-800 hover:border-pink-500/50 transition-all group" href="https://www.instagram.com/cychenyao2088" target="_blank">
+<div class="w-10 h-10 bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-500 text-white rounded-lg flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-transform">📸</div>
+<div>
+<div class="font-bold text-gray-200 group-hover:text-white">INS</div>
+<div class="text-xs text-gray-500 font-mono">点击直接进入链接</div>
+</div>
+</a>
+</div>
+<!-- Contact & Collab -->
+<div class="space-y-4" id="follows">
+<h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest border-b border-gray-800 pb-2 mb-4">联络与合作 / CONTACT</h3>
+<!-- WeChat -->
+<div @click="navigator.clipboard.writeText('NextbyNEXT'); copied = true; setTimeout(() =&gt; copied = false, 2000)" class="bg-gray-900/50 border border-purple-500/30 p-4 rounded group hover:bg-purple-900/20 transition-all cursor-pointer relative overflow-hidden" x-data="{ copied: false }">
+<div class="absolute inset-0 bg-purple-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+<div class="relative flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-green-500/20 flex items-center justify-center text-green-400">
+<svg class="w-6 h-6" fill="currentColor" viewbox="0 0 24 24"><path d="M8.5,13.5A1.5,1.5 0 0,1 7,12A1.5,1.5 0 0,1 8.5,10.5A1.5,1.5 0 0,1 10,12A1.5,1.5 0 0,1 8.5,13.5M15.5,13.5A1.5,1.5 0 0,1 14,12A1.5,1.5 0 0,1 15.5,10.5A1.5,1.5 0 0,1 17,12A1.5,1.5 0 0,1 15.5,13.5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2ZM12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20Z"></path></svg>
+</div>
+<div>
+<div class="text-xs text-gray-500">WECHAT ID</div>
+<div class="text-white font-bold">NextbyNEXT</div>
+</div>
+<div class="ml-auto text-xs text-purple-400" x-text="copied ? 'COPIED!' : 'CLICK TO COPY'"></div>
+</div>
+</div>
+<!-- Email -->
+<a class="bg-gray-900/50 border border-purple-500/30 p-4 rounded group hover:bg-purple-900/20 transition-all relative overflow-hidden" href="mailto:cychenyao2088@163.com">
+<div class="absolute inset-0 bg-purple-500/10 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+<div class="relative flex items-center gap-4">
+<div class="w-10 h-10 rounded bg-blue-500/20 flex items-center justify-center text-blue-400">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</div>
+<div>
+<div class="text-xs text-gray-500">EMAIL LINK</div>
+<div class="text-white font-bold">cychenyao2088@163.com</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Large Visual / Grid Placeholder - REMOVED to avoid empty scroll space -->
+
+<!-- Bottom Right Navigation (Console Style) - REMOVED per user request -->
+<!-- Group Photo Section REMOVED per user request -->
+<script>
+        function toggleLang() {
+            const currentLang = 'zh';
+            const newLang = currentLang === 'en' ? 'zh' : 'en';
+            const url = new URL(window.location.href);
+            url.searchParams.set('lang', newLang);
+            document.cookie = `lang=${newLang}; path=/; max-age=31536000`;
+            window.location.href = url.toString();
+        }
+
+        // Meteor Effect
+        function triggerMeteors() {
+            const count = 15; // Number of meteors
+            for (let i = 0; i < count; i++) {
+                const meteor = document.createElement('div');
+                meteor.className = 'meteor';
+                
+                // Randomize start position (mostly top/right)
+                const startX = Math.random() * 120 - 10; // -10vw to 110vw
+                const startY = Math.random() * -50; // Above screen
+                
+                meteor.style.left = startX + 'vw';
+                meteor.style.top = startY + 'vh';
+                
+                // Randomize animation duration and delay
+                const duration = 1 + Math.random() * 1.5;
+                const delay = Math.random() * 0.5;
+                
+                meteor.style.animation = `meteor-fall ${duration}s linear forwards ${delay}s`;
+                
+                document.body.appendChild(meteor);
+                
+                // Cleanup
+                setTimeout(() => {
+                    meteor.remove();
+                }, (duration + delay) * 1000);
+            }
+        }
+    </script>
+</body>
+</html>

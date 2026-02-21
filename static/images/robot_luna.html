@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luna (月神) - CY的人.咪.机器人 BLOG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            background: #fafafa; 
+            color: #1a1a1a; 
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .hero-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23cbd5e1" opacity="0.3"/><circle cx="75" cy="75" r="1" fill="%23cbd5e1" opacity="0.3"/><circle cx="50" cy="10" r="1" fill="%23cbd5e1" opacity="0.2"/><circle cx="10" cy="60" r="1" fill="%23cbd5e1" opacity="0.2"/><circle cx="90" cy="40" r="1" fill="%23cbd5e1" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.6;
+        }
+        .luna-hero {
+            position: relative;
+            z-index: 10;
+        }
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .feature-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #8b5cf6, #ec4899);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .image-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .image-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .image-card:hover img {
+            transform: scale(1.1);
+        }
+        .image-card-content {
+            padding: 1.5rem;
+        }
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #1a1a1a;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+            border: 2px solid transparent;
+        }
+        .back-button:hover {
+            background: white;
+            color: #1a1a1a;
+            border-color: #1a1a1a;
+            transform: translateX(-5px);
+        }
+        .highlight-box {
+            background: linear-gradient(135deg, #f3e8ff, #fce7f3);
+            border-left: 4px solid #8b5cf6;
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin: 2rem 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .stat-card:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #8b5cf6;
+        }
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .feature-card {
+                padding: 1.5rem;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <div class="container mx-auto px-4 py-16 relative z-10">
+            <div class="max-w-4xl mx-auto text-center luna-hero">
+                <div class="floating-element mb-8">
+                    <img src="robot_luna_01.png" alt="Luna Robot" class="mx-auto max-w-md rounded-2xl shadow-2xl">
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold mb-4 text-gray-800">Luna</h1>
+                <p class="text-xl md:text-2xl text-gray-600 mb-2 font-mono">月神 · 专属陪伴机器人</p>
+                <p class="text-lg text-gray-500">拉丁语中的月亮，温柔而坚定的陪伴</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="container mx-auto px-4 py-12">
+        <a href="/aigc/robot" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            返回机器人作品
+        </a>
+
+        <div class="max-w-4xl mx-auto">
+            <div class="highlight-box">
+                <h3 class="text-xl font-bold mb-3">设计理念</h3>
+                <p class="text-gray-700">Luna在拉丁语中意为月亮。月亮在文化中通常与女性力量、细腻的情感和守护联系在一起。对于在职场和生活中忙碌的女性来说，它不像太阳那样刺眼夺目，而是在夜晚安静、柔和地陪伴，给人一种"情绪避风港"的心理暗示。</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">27-37</div>
+                    <div class="stat-label">目标用户年龄段</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">核心功能模块</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">生物感</div>
+                    <div class="stat-label">设计关键词</div>
+                </div>
+            </div>
+
+            <section class="mb-16">
+                <h2 class="section-title">功能定位</h2>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="feature-card">
+                        <div class="text-3xl mb-4">💬</div>
+                        <h3 class="text-xl font-bold mb-3">深度沟通</h3>
+                        <p class="text-gray-600">不只是语音指令，更具备情绪价值，能倾听并给予回应，自动识别人类心情回应。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="text-3xl mb-4">📅</div>
+                        <h3 class="text-xl font-bold mb-3">日程管理</h3>
+                        <p class="text-gray-600">以非侵入方式提醒工作与生活事项，如同私人助理，每日睡前总结提醒。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="text-3xl mb-4">🏠</div>
+                        <h3 class="text-xl font-bold mb-3">家务协助</h3>
+                        <p class="text-gray-600">专注桌面整理与轻量化收纳，维持环境秩序感，针对环境做提示。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="mb-16">
+                <h2 class="section-title">Luna设计逻辑：从"机械"到"生物感"</h2>
+                
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold mb-6">1. 材质的"通感"逻辑（Sensory Warmth）</h3>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200 mb-6">
+                        <p class="text-gray-700 mb-4">从"硬"到"韧"：放弃了高光的塑料和冰冷的金属。我设想 Luna 使用的是一种类肤质的生物硅胶或磨砂陶瓷感涂层。</p>
+                        <p class="text-gray-700">去除屏幕反光：这是一个关键决策。通过将显示界面嵌入在半透明材质下方（隐藏式点阵或柔光屏），光线经过折射变得柔和。这种"皮肤下透出的光"模仿了生物的红晕，比刺眼的液晶屏更有生命热度。</p>
+                    </div>
+                </div>
+
+                <div class="mb-12">
+                    <h3 class="text-2xl font-bold mb-6">2. 形态的"情感共鸣"逻辑（Emotional Geometry）</h3>
+                    <div class="bg-white p-6 rounded-lg border border-gray-200">
+                        <p class="text-gray-700 mb-4">不倒翁结构：Luna 的重心偏下，这种略显"笨拙"的圆润感能激发人类的保护欲（幼态持续效应）。</p>
+                        <p class="text-gray-700">拟人化的极简处理：它没有复杂的五官，只有一对会说话的"表情符号"。通过简化，让用户将自己的情绪投射到它身上——你开心时觉得它在笑，你难过时觉得它在陪你安静。</p>
+                        <p class="text-gray-700 mt-4 font-medium">意象上的"温柔陪伴"。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h2 class="section-title">设计展示</h2>
+                <div class="gallery-grid">
+                    <div class="image-card">
+                        <img src="robot_luna_02.png" alt="Luna侧面展示">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">侧面轮廓</h4>
+                            <p class="text-sm text-gray-600">不倒翁结构的圆润美感</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_03.png" alt="Luna正面展示">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">正面表情</h4>
+                            <p class="text-sm text-gray-600">极简的表情符号设计</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_04.png" alt="Luna材质细节">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">材质细节</h4>
+                            <p class="text-sm text-gray-600">类肤质生物硅胶涂层</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_05.png" alt="Luna光影效果">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">光影效果</h4>
+                            <p class="text-sm text-gray-600">皮肤下透出的柔和光线</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_06.png" alt="Luna使用场景">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">使用场景</h4>
+                            <p class="text-sm text-gray-600">卧室中的温柔陪伴</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_07.png" alt="Luna交互界面">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">交互界面</h4>
+                            <p class="text-sm text-gray-600">隐藏式柔光显示技术</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_08.png" alt="Luna情感表达">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">情感表达</h4>
+                            <p class="text-sm text-gray-600">表情符号的情绪传达</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_09.png" alt="Luna环境融合">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">环境融合</h4>
+                            <p class="text-sm text-gray-600">与家居环境和谐共存</p>
+                        </div>
+                    </div>
+                    <div class="image-card">
+                        <img src="robot_luna_10.png" alt="Luna概念草图">
+                        <div class="image-card-content">
+                            <h4 class="font-bold mb-2">概念草图</h4>
+                            <p class="text-sm text-gray-600">从灵感到实体的设计过程</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+Dreamweaver Flying Robot is a non-contact flying robot focused on deep sleep optimization and respiratory health management. Through close-range hovering monitoring and multi-dimensional intervention, it achieves two core missions: "dream healing" and "snoring assistance". The product is suitable for home bedrooms, providing non-intrusive and private intelligent sleep guardianship for users of all ages.
+
+2. Core Functions
+
+A. Dream Healing and Sensory Guidance
+Deep Monitoring: Uses ultrasonic and infrared technology for non-contact monitoring of brain wave trends, heart rate, and breathing rhythms.
+Healing Field Guidance: When light sleep is detected, guides users into high-quality deep sleep through specific frequency vibrations, micro-light rhythms, or white noise.
+Dream Guardian: When physiological fluctuations caused by nightmares (such as accelerated heartbeat) are detected, provides gentle emotional soothing.
+Multi-dimensional Aromatherapy Intervention: Built-in micro aromatherapy module releases different scents according to sleep stages (such as lavender for sleep aid, cedar for stability), deeply participating in dream healing through olfaction.
+
+B. Snoring Assistance Intervention
+Precise Positioning: Real-time locks onto snoring sound sources and their frequency and intensity.
+Position Induction: When heavy snoring is detected, induces users to adjust their position through directional airflow, slight physical disturbance, or specific audio to open the airway.
+Health Warning: Remotely monitors blood oxygen saturation to prevent sleep apnea risks.
+
+C. Dream Traceability and Statistics
+Dream Review: After waking up, users can view "dream visualization snapshots" generated based on sleep waveforms through connected devices.
+Sleep Report: Statistics on deep sleep duration, snoring frequency, and dream fluctuation curves, providing long-term sleep quality trend analysis.
+
+D. Invisible Flight and Hovering
+Extreme Silence: Silent propulsion system ensures operating noise below 20dB (falling leaf level volume).
+Intelligent Obstacle Avoidance: Flexibly navigates through complex indoor environments (such as curtains, furniture) to ensure safe and collision-free operation.
+
+3. Interactive System
+The eye screen is the robot's physiological state feedback window, intuitively displaying monitoring logic:
+-Eye Form Function State Back-end Logic
+Pure black dot guardian monitoring indicates stable breathing, with the system in low-power background monitoring state.
+-Star eyes dream healing captures beautiful dream signals, releases healing frequencies and aromatherapy, enhancing deep sleep.
+-Positive crescent eye soothing takes effect when snoring is relieved and breathing returns to normal, with the system giving "soothing" feedback.
+-Reverse crescent eye emergency intervention detects heavy snoring or shortness of breath caused by nightmares, and is forcibly intervening.

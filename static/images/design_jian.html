@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>茧 - CY的人.咪.机器人 BLOG</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            background: #ffffff; 
+            color: #000000; 
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+        }
+        .font-mono { font-family: 'JetBrains Mono', monospace; }
+        .hero-bg {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .image-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+        .caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            padding: 2rem 1.5rem 1.5rem;
+            font-size: 0.875rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .image-container:hover .caption {
+            opacity: 1;
+        }
+        .title-section {
+            text-align: center;
+            padding: 4rem 0 2rem;
+        }
+        .title-section h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        .title-section .subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+        .content-section {
+            max-width: 4xl;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        .description {
+            font-size: 1.125rem;
+            line-height: 1.8;
+            color: #374151;
+            text-align: justify;
+            margin: 3rem 0;
+        }
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: #000000;
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin: 2rem 0;
+        }
+        .back-button:hover {
+            background: #374151;
+            transform: translateX(-5px);
+        }
+        @media (max-width: 768px) {
+            .image-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .title-section h1 {
+                font-size: 2.5rem;
+            }
+            .content-section {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="title-section hero-bg">
+        <div class="content-section">
+            <h1>茧</h1>
+            <p class="subtitle">仿生机械结构重塑母体概念</p>
+            <p class="font-mono text-sm text-gray-500 mt-4">2026年1月</p>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <a href="/aigc/design" class="back-button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            返回设计作品
+        </a>
+
+        <div class="description">
+            <p>「茧」。它以仿生机械结构重塑了"母体"概念，透明的蝶翼与精密骨架交织，将使用者包裹在安全感中。坐入其中，仿佛步入人类进化的"暂存区"。在这里，生理边界与机械结构深度共生，人不再仅仅是坐者，而是成为了这台精密仪器的核心逻辑，在感官的静默中，完成一场关于肉身增强的深度重构。</p>
+        </div>
+
+        <div class="image-grid">
+            <div class="image-container">
+                <img src="design_jian.png" alt="茧 - 整体结构">
+                <div class="caption">
+                    <h3>整体结构</h3>
+                    <p>透明蝶翼与精密骨架的完美融合</p>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="design_jian2.png" alt="茧 - 细节展示">
+                <div class="caption">
+                    <h3>细节展示</h3>
+                    <p>仿生机械结构的精密工艺</p>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="design_jian3.png" alt="茧 - 使用状态">
+                <div class="caption">
+                    <h3>使用状态</h3>
+                    <p>使用者与机械的深度共生</p>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="design_jian4.png" alt="茧 - 概念图">
+                <div class="caption">
+                    <h3>概念图</h3>
+                    <p>人类进化的"暂存区"概念</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="description">
+            <p><strong>English:</strong></p>
+            <p>"The Chrysalis." It reimagines the "matrix" concept through a biomechanical structure, where transparent butterfly wings interweave with a precision skeleton to envelop the user in a sense of security. Sitting within it feels like entering a "buffer zone" of human evolution. Here, biological boundaries co-exist deeply with mechanical structures. The user is no longer just a sitter, but the core logic of this precision instrument, completing a profound reconstruction of physical enhancement amidst sensory silence.</p>
+        </div>
+    </div>
+</body>
+</html>
