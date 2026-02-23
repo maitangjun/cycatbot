@@ -689,7 +689,7 @@
 <a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="art/index.html">艺术</a>
 <a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="design/index.html">设计</a>
 <a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity border-b border-gray-100 last:border-0 tracking-wide" href="music/index.html">数字音乐人</a>
-<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity last:border-0 tracking-wide" href="aigc/curation/index.html">策展</a>
+<a class="block px-3 py-2 text-sm hover:bg-gray-100 text-black hover:opacity-80 transition-opacity last:border-0 tracking-wide" href="curation/index.html">策展</a>
 </div>
 </div>
 <a class="text-black font-bold hover:opacity-70 transition-opacity" href="ai-projects/index.html">AI项目</a>
@@ -717,7 +717,7 @@
 <a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="art/index.html">AIGC创作 - 艺术</a>
 <a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="design/index.html">AIGC创作 - 设计</a>
 <a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="music/index.html">AIGC创作 - 数字音乐人</a>
-<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="aigc/curation/index.html">AIGC创作 - 策展</a>
+<a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="curation/index.html">AIGC创作 - 策展</a>
 <a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="ai-projects/index.html">AI项目</a>
 <a class="block px-3 py-2 text-base font-bold text-gray-600 hover:text-purple-600 hover:bg-gray-50 rounded-md" href="follows/index.html">关注与合作</a>
 <div class="mt-4 px-3 flex items-center space-x-4">
@@ -832,8 +832,21 @@
                 const today = new Date().toISOString().slice(0,10);
                 const lastISO = localStorage.getItem('lastFortuneDateISO');
                 const lastText = localStorage.getItem('lastFortuneText');
-                this.reusedToday = !!(lastISO === today && lastText);
-                this.fortune = this.reusedToday ? lastText : '';
+                
+                // Check if it's a new day - if so, clear old fortune
+                if (lastISO && lastISO !== today) {
+                    // It's a new day, allow fresh draw
+                    this.fortune = '';
+                    this.reusedToday = false;
+                } else if (lastISO === today && lastText) {
+                    // Same day, show previous fortune
+                    this.fortune = lastText;
+                    this.reusedToday = true;
+                } else {
+                    // No previous fortune or first time
+                    this.fortune = '';
+                    this.reusedToday = false;
+                }
             },
             saveFortune(text) {
                 const today = new Date().toISOString().slice(0,10);
@@ -884,7 +897,7 @@
                     });
                     if (!res.ok) throw new Error('Bad response');
                     const d = await res.json();
-                    this.wishResponse = d.response || '愿望已送达，祝你心想事成。';
+                    this.wishResponse = d.response || '愿望已送达，我们会尽快查看您的留言。';
                     this.wish = '';
                 } catch (e) {
                     this.wishResponse = '网络打盹了，请稍后再试。';
@@ -959,7 +972,7 @@
 </svg>
 </button>
 </div>
-<p class="text-black text-sm mb-8 leading-relaxed">领取你的今日赠言</p>
+<p class="text-black text-sm mb-8 leading-relaxed">领取你的今日赠言<br><span class="text-xs text-gray-500">每日可抽取一次，次日自动刷新</span></p>
 <div class="flex flex-col items-center relative z-10" x-show="!fortune">
 <div @click="if(!loading) drawFortune()" class="mb-8 text-7xl cursor-pointer hover:scale-110 transition-transform duration-300 filter drop-shadow-md">
                                 🔮
@@ -981,7 +994,7 @@
 <p class="text-black font-medium text-lg leading-relaxed relative z-10" x-text="fortune"></p>
 </div>
 <div class="flex flex-col items-center gap-4">
-<p class="text-xs text-black" x-show="reusedToday">今日已求过签了，明日再来吧。</p>
+<p class="text-xs text-gray-600" x-show="reusedToday">今日已抽取，明日再来刷新运势吧。</p>
 <button @click="resetTodayFortune()" class="text-black hover:text-purple-600 text-sm font-bold tracking-widest hover:underline uppercase">再求一次</button>
 <button @click="fortuneModal = false" class="text-black hover:text-purple-600 text-sm font-bold tracking-widest hover:underline uppercase">关闭</button>
 </div>
