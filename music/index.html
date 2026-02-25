@@ -13,6 +13,10 @@
         .font-mech { font-family: 'Share Tech Mono', monospace; font-weight: 800; letter-spacing: .05em; }
         .grid-bg { background-image: radial-gradient(#e5e7eb 1px, transparent 1px); background-size: 24px 24px; }
         [x-cloak] { display: none !important; }
+        .font-art { font-family: 'Share Tech Mono', monospace; letter-spacing: .08em; }
+        .player-btn { width: 40px; height: 40px; border: 1px solid #000; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; }
+        .player-track { height: 3px; background: #e5e7eb; border-radius: 9999px; }
+        .player-progress { height: 3px; background: #000; border-radius: 9999px; width: 33%; }
     </style>
 </head>
 <body class="bg-white text-black antialiased grid-bg">
@@ -88,12 +92,25 @@
                 数字音乐人
             </h1>
             <p class="text-xs md:text-base text-black font-mono mt-1 md:mt-2 tracking-widest">
-                数字乐队即将上线
+                CY的数字音乐实验与虚拟乐队
             </p>
         </div>
-        <div class="text-center py-16">
-            <div class="text-2xl font-bold text-gray-600 mb-4">即将上线</div>
-            <div class="text-gray-500">敬请期待...</div>
+        <div class="max-w-3xl mx-auto mt-10 space-y-10">
+            <div class="p-1">
+                <div class="text-xs text-gray-500 font-mono tracking-widest mb-2">TRACK 01</div>
+                <h2 class="font-art text-lg md:text-xl font-extrabold text-black mb-2">《机器人，诗，赛博霓虹》</h2>
+                <div class="flex items-center gap-4">
+                    <a href="https://suno.com/s/sBAnA2v8z4yokrz9" target="_blank" class="player-btn text-black hover:bg-black hover:text-white transition">▶</a>
+                    <div class="flex-1 player-track">
+                        <div class="player-progress"></div>
+                    </div>
+                    <div class="text-xs font-mono text-gray-600">00:00 / 03:30</div>
+                    <a href="https://suno.com/s/sBAnA2v8z4yokrz9" target="_blank" class="text-sm font-medium underline decoration-gray-300 hover:decoration-black">在 Suno 播放 →</a>
+                </div>
+                <div class="mt-2 text-xs md:text-sm text-gray-700 leading-relaxed">
+                    来自CYCATBOT的实验电子轻音乐，50年后机器人在霓虹与代码之间游走的城市诗。
+                </div>
+            </div>
         </div>
     </div>
 </main>
